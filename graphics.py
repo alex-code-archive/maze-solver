@@ -12,6 +12,9 @@ class Window:
         self.canvas.pack()
         self.running = False
 
+    def draw_line(self, line, fill_color):
+        line.draw(self.canvas, fill_color)
+
     def redraw(self):
         self.root.update_idletasks()
         self.root.update()
@@ -26,9 +29,9 @@ class Window:
 
 
 class Point:
-    def __init__(self):
-        self.x = 0
-        self.y = 0
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
 
 class Line:
