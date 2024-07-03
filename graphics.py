@@ -101,6 +101,8 @@ class Cell:
             self.win.draw_line(bottom_wall, "white")
 
     def draw_move(self, to_cell, undo=False):
+        if self.win is None or self.x1 is None or self.y1 is None:
+            return
         from_cell_center_x = (self.x1 + self.x2) / 2
         from_cell_center_y = (self.y1 + self.y2) / 2
         to_cell_center_x = (to_cell.x1 + to_cell.x2) / 2
@@ -113,6 +115,3 @@ class Cell:
             Point(to_cell_center_x, to_cell_center_y),
         )
         self.win.draw_line(line, color)
-
-    def __repr__(self):
-        return "x"
