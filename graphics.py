@@ -6,10 +6,10 @@ class Window:
         self.width = width
         self.height = height
         self.root = Tk()
-        self.root.title = "Maze Solver"
+        self.root.title("Maze Solver")
         self.root.protocol("WM_DELETE_WINDOW", self.close)
-        self.canvas = Canvas()
-        self.canvas.pack()
+        self.canvas = Canvas(self.root, bg="white", height=height, width=width)
+        self.canvas.pack(fill=BOTH, expand=1)
         self.running = False
 
     def draw_line(self, line, fill_color="black"):
@@ -51,32 +51,40 @@ class Line:
 
 
 class Cell:
-    def __init__(self, x1, y1, x2, y2, window=None):
+    def __init__(self, win=None):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
-        self.x1 = x1
-        self.x2 = x2
-        self.y1 = y1
-        self.y2 = y2
-        self.win = window
+        self.x1 = None
+        self.x2 = None
+        self.y1 = None
+        self.y2 = None
+        self.win = win
 
-    def draw(self):
+    def draw(self, x1, y1, x2, y2):
+        if self.win is None:
+            return
+
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+
         if self.has_left_wall:
-            left_wall = Line(Point(self.x1, self.y1), Point(self.x1, self.y2))
+            left_wall = Line(Point(x1, y1), Point(x1, y2))
             self.win.draw_line(left_wall)
 
         if self.has_right_wall:
-            right_wall = Line(Point(self.x2, self.y1), Point(self.x2, self.y2))
+            right_wall = Line(Point(x2, y1), Point(x2, y2))
             self.win.draw_line(right_wall)
 
         if self.has_top_wall:
-            top_wall = Line(Point(self.x1, self.y1), Point(self.x2, self.y1))
+            top_wall = Line(Point(x1, y1), Point(x2, y1))
             self.win.draw_line(top_wall)
 
         if self.has_bottom_wall:
-            bottom_wall = Line(Point(self.x1, self.y2), Point(self.x2, self.y2))
+            bottom_wall = Line(Point(x1, y2), Point(x2, y2))
             self.win.draw_line(bottom_wall)
 
     def draw_move(self, to_cell, undo=False):
@@ -92,3 +100,6 @@ class Cell:
             Point(to_cell_center_x, to_cell_center_y),
         )
         self.win.draw_line(line, color)
+
+    def __repr__(self):
+        return "x"
