@@ -87,7 +87,8 @@ class Cell:
         color = "black"
         if not undo:
             color = "red"
-        Line(
+        line = Line(
             Point(from_cell_center_x, from_cell_center_y),
             Point(to_cell_center_x, to_cell_center_y),
-        ).draw(self.win.canvas, color)
+        )
+        self.win.draw_line(line, color)
